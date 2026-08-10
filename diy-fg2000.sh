@@ -16,16 +16,14 @@ function git_sparse_clone() {
 
 # 添加额外插件
 #git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome package/luci-app-adguardhome
-#git clone --depth=1 -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-wechatpush
-#git clone  https://github.com/gdy666/luci-app-lucky.git package/lucky
 #git_sparse_clone master https://github.com/vernesong/OpenClash luci-app-openclash
-git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-app-adguardhome adguardhome
-#git_sparse_clone main https://github.com/kiddin9/op-packages luci-app-onliner
-#git_sparse_clone Immortalwrt https://github.com/shidahuilang/openwrt-package luci-app-floatip floatip
-#git_sparse_clone main https://github.com/kiddin9/op-packages  luci-app-lucky lucky
 
-# MosDNS
-#git clone --depth=1 https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
+git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-app-adguardhome adguardhome
+
+git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-theme-aurora
+
+git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-app-aurora-config
+
 
 # 加入新储存库
 echo "src-git rtp2httpd https://github.com/stackia/rtp2httpd.git" >> "feeds.conf.default"
@@ -39,6 +37,7 @@ CONFIG_PACKAGE_luci-app-adguardhome_INCLUDE_binary=y
 CONFIG_PACKAGE_luci-app-rtp2httpd=y
 CONFIG_PACKAGE_luci-app-wechatpush=y
 CONFIG_PACKAGE_luci-app-autoreboot=y
+CONFIG_PACKAGE_luci-app-sqm=y
 CONFIG_PACKAGE_luci-theme-aurora=y
 CONFIG_PACKAGE_luci-app-aurora-config=y
 " >> .config
