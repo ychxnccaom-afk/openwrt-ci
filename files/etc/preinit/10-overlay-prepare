@@ -1,0 +1,45 @@
+#!/bin/sh
+
+OVERLAY_DEV="/dev/mmcblk0p10"
+OVERLAY_MOUNT="/overlay"
+TMP_MOUNT="/tmp/overlay_pre"
+SETUP_FLAG="/tmp/.overlay_setup_done"
+
+# 只在第一次执行
+[ -f "$SETUP_FLAG" ] && exit 0
+[ -b "$OVERLAY_DEV" ] || exit 0
+
+# 检查是否已经在 cmdline 中指定了 overlay
+if grep -q "overlay=$OVERLAY_DEV" /proc/cmdline; then
+    # 如果已经指定，fstools 会自动处理，无需干预
+    touch "$SETUP_FLAG"
+    exit 0
+fi
+
+# 格式化分区（如果需要）
+if ! blkid "$OVERLAY_DEV" | grep -q "TYPE=\"ext4\""; then
+    echo "Formatting $OVERLAY_DEV for overlay..."
+    mkfs.ext4 -F -L overlay "$OVERLAY_DEV"
+fi
+
+# 挂载并准备 overlay 目录结构
+mkdir -p "$TMP_MOUNT"
+mount -t ext4 "$OVERLAY_DEV" "$TMP_MOUNT"
+
+# 如果分区为空，创建 overlay 所需的目录结构
+if [ -z "$(ls -A "$TMP_MOUNT" 2>/dev/null)" ]; then
+    echo "Creating overlay directories on $OVERLAY_DEV..."
+    mkdir -p "$TMP_MOUNT/upper" "$TMP_MOUNT/work"
+    # 复制必要的初始文件（如果有）
+    [ -d "/rom/overlay" ] && cp -a /rom/overlay/* "$TMP_MOUNT/" 2>/dev/null || true
+fi
+
+umount "$TMP_MOUNT"
+rmdir "$TMP_MOUNT"
+
+# 设置标志
+touch "$SETUP_FLAG"
+
+# 通知 fstools 使用这个分区
+# 通过写入 /tmp/overlay_device 让 fstools 读取
+echo "$OVERLAY_DEV" > /tmp/overlay_device
