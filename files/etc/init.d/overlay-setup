@@ -1,1 +1,21 @@
+#!/bin/sh /etc/rc.common
 
+START=01
+STOP=90
+USE_PROCD=0
+
+start() {
+    local overlay_dev="/dev/mmcblk0p10"
+    
+    # 检查当前 overlay 挂载源
+    local current_overlay=$(mount | grep "on /overlay" | awk '{print $1}')
+    [ "$current_overlay" = "$overlay_dev" ] && return 0
+    
+    # 如果 /overlay 尚未挂载，直接挂载
+    if ! mount | grep -q "on /overlay"; then
+        mount -t ext4 "$overlay_dev" /overlay 2>/dev/null && {
+            echo "Successfully mounted $overlay_dev as /overlay"
+            return 0
+        }
+    fi
+}
