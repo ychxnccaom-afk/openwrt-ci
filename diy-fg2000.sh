@@ -38,6 +38,7 @@ CONFIG_PACKAGE_luci-app-rtp2httpd=y
 CONFIG_PACKAGE_luci-app-wechatpush=y
 CONFIG_PACKAGE_luci-app-autoreboot=y
 CONFIG_PACKAGE_luci-app-sqm=y
+CONFIG_PACKAGE_luci-app-watchcat=y
 CONFIG_PACKAGE_luci-theme-aurora=y
 CONFIG_PACKAGE_luci-app-aurora-config=y
 " >> .config
