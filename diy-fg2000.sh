@@ -23,7 +23,7 @@ git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-app-adg
 git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-theme-aurora
 
 git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-app-aurora-config
-
+git_sparse_clone main https://github.com/kenzok8/small-package luci-app-floatip floatip
 
 # 加入新储存库
 echo "src-git rtp2httpd https://github.com/stackia/rtp2httpd.git" >> "feeds.conf.default"
@@ -37,6 +37,7 @@ CONFIG_PACKAGE_luci-app-adguardhome_INCLUDE_binary=y
 CONFIG_PACKAGE_luci-app-rtp2httpd=y
 CONFIG_PACKAGE_luci-app-wechatpush=y
 CONFIG_PACKAGE_luci-app-autoreboot=y
+CONFIG_PACKAGE_luci-app-floatip=y
 CONFIG_PACKAGE_luci-app-sqm=y
 CONFIG_PACKAGE_luci-app-watchcat=y
 CONFIG_PACKAGE_luci-theme-aurora=y
