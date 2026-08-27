@@ -17,18 +17,13 @@ function git_sparse_clone() {
 # 添加额外插件
 #git clone --depth=1 https://github.com/kongfl888/luci-app-adguardhome package/luci-app-adguardhome
 #git_sparse_clone master https://github.com/vernesong/OpenClash luci-app-openclash
-
 git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-app-adguardhome adguardhome
-
-git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-theme-aurora
-
-git_sparse_clone master https://github.com/kenzok8/openwrt-packages luci-app-aurora-config
-git_sparse_clone main https://github.com/kenzok8/small-package luci-app-floatip floatip
+#git_sparse_clone main https://github.com/kenzok8/small-package luci-app-floatip floatip
+git clone https://github.com/eamonxg/luci-theme-aurora.git package/luci-theme-aurora
+git clone https://github.com/eamonxg/luci-app-aurora-config.git package/luci-app-aurora-config
 
 # 加入新储存库
-echo "src-git rtp2httpd https://github.com/stackia/rtp2httpd.git" >> "feeds.conf.default"
-
-
+#echo "src-git rtp2httpd https://github.com/stackia/rtp2httpd.git" >> "feeds.conf.default"
 
 echo "
 # 插件
