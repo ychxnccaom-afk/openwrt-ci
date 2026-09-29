@@ -35,6 +35,18 @@ CONFIG_PACKAGE_luci-app-sqm=y
 CONFIG_PACKAGE_luci-app-watchcat=y
 CONFIG_PACKAGE_luci-theme-aurora=y
 CONFIG_PACKAGE_luci-app-aurora-config=y
+
+# === 内核模块（本机增量，2026-09-29）===
+# ① 必需：sing-box / Open-Box 的 TUN 透明代理需要 tun 驱动。
+#    官方 configs/fg2000.config 里没有它，导致 TUN 模式无法使用。
+CONFIG_PACKAGE_kmod-tun=y
+# ② 建议：TProxy 模式（比 TUN 少一层转发、性能更好）。三项一起开才会导出内核符号
+#    （否则会出现 Unknown symbol udp4_lib_lookup / nf_tproxy_laddr4 之类的加载失败）。
+CONFIG_PACKAGE_kmod-nft-tproxy=y
+CONFIG_PACKAGE_kmod-nf-tproxy=y
+CONFIG_PACKAGE_kmod-nft-socket=y
+CONFIG_PACKAGE_kmod-nft-queue=y
+# === 内核模块 END ===
 " >> .config
 
 # 修改默认IP
